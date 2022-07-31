@@ -39,14 +39,21 @@ export const App = () => {
   }, [messages]);
 
   return (
-    <div className="App">
-      <form onSubmit={onSubmit}>
-        <input type="text" value={message} onChange={({ target }) => setMessage(target.value)} />
-        <button>Send</button>
+    <div className=" h-screen bg-zinc-800 text-white flex items-center justify-center">
+      <form className="bg-zinc-900 p-10 w-screen" onSubmit={onSubmit}>
+        <h1 className="text-2xl font-bold my-2">Chat React</h1>
+        <input
+          type="text"
+          value={message}
+          onChange={({ target }) => setMessage(target.value)}
+          className="rounded-lg  border-2 border-zinc-500 p-2 text-black w-full"
+        />
+        <ul className="h-96 overflow-y-auto">
+          {messages.map((message, index) => (
+            <Message key={message.from + index} body={message.body} from={message.from} />
+          ))}
+        </ul>
       </form>
-      {messages.map((message, index) => (
-        <Message key={message.from + index} body={message.body} from={message.from} />
-      ))}
     </div>
   );
 };
