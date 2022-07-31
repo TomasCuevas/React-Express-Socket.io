@@ -33,7 +33,10 @@ export class Server {
       console.log(socket.id);
 
       socket.on('newMessage', (message) => {
-        socket.broadcast.emit('newMessage', message);
+        socket.broadcast.emit('newMessage', {
+          body: message,
+          from: socket.id,
+        });
       });
     });
   }
