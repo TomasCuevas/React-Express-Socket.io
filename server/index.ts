@@ -1,6 +1,6 @@
 import 'dotenv/config';
 
-import { Server } from './server/Server';
+import { Server } from './Server';
 
 const server = new Server();
 server.listen();

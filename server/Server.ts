@@ -13,19 +13,30 @@ export class Server {
   constructor() {
     this.app = express();
     this.server = http.createServer(this.app);
-    this.io = new ServerIo(this.server);
+    this.io = new ServerIo(this.server, {
+      cors: {
+        origin: process.env.CORS_ALLOWED,
+      },
+    });
     this.port = process.env.PORT || 4000;
 
     this.middlewares();
+    this.listenEvent();
   }
 
   private middlewares() {
     this.app.use(morgan('dev'));
-    this.app.use(cors());
+  }
+
+  private listenEvent() {
+    this.io.on('connection', (socket) => {
+      console.log('A user connected');
+      console.log(socket.id);
+    });
   }
 
   public listen() {
-    this.app.listen(this.port, () => {
+    this.server.listen(this.port, () => {
       console.log(`Servidor iniciado en el puerto ${this.port}`);
     });
   }
