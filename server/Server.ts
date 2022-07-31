@@ -30,8 +30,11 @@ export class Server {
 
   private listenEvent() {
     this.io.on('connection', (socket) => {
-      console.log('A user connected');
       console.log(socket.id);
+
+      socket.on('newMessage', (message) => {
+        socket.broadcast.emit('newMessage', message);
+      });
     });
   }
 
